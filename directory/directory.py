@@ -1,6 +1,6 @@
+from typing import Optional
 from .contact import Contact
 from .data_stream import DataStream
-from typing import Optional
 
 
 class Directory:

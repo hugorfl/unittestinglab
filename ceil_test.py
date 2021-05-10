@@ -62,7 +62,7 @@ class CeilTest(unittest.TestCase):
 
     def test_fail_other_types_than_ints_or_floats_passed(self):
         with self.assertRaises(TypeError):
-            ceil(-14.5+9j)
+            ceil(-14.5 + 9j)
 
         with self.assertRaises(TypeError):
             ceil([14.5])

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from directory.contact import Contact
 from typing import Any
+from directory.contact import Contact
 
 
 class DataStream(ABC):

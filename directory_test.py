@@ -20,10 +20,10 @@ Note: Remember Right BICEP
 :authors: - Hugo Rodríguez
 """
 
+import unittest
 from directory.contact import Contact
 from test_doubles.directory_builder import DirectoryBuilder
 from test_doubles.spy_data_stream import SpyDataStream
-import unittest
 
 """
 Test Cases:
@@ -43,104 +43,107 @@ Test Cases:
 class DirectoryManagerTest(unittest.TestCase):
 
     def test_pass_can_add_new_record(self):
-        s = SpyDataStream()
-        d = self.__a_directory()\
-            .build(s)
+        datastream = SpyDataStream()
+        directory = self.__a_directory()\
+            .build(datastream)
 
-        d.add_contact(self.__a_contact())
+        directory.add_contact(self.__a_contact())
 
-        self.assertEqual(s.contacts[0], self.__a_contact())
+        self.assertEqual(datastream.contacts[0], self.__a_contact())
 
     def test_pass_no_other_records_are_added(self):
-        s = SpyDataStream()
-        d = self.__a_directory()\
-            .build(s)
+        datastream = SpyDataStream()
+        directory = self.__a_directory()\
+            .build(datastream)
 
-        d.add_contact(self.__a_contact())
+        directory.add_contact(self.__a_contact())
 
-        self.assertEqual(len(s.contacts), 1)
+        self.assertEqual(len(datastream.contacts), 1)
 
     def test_fail_cannot_add_same_contact_twice(self):
-        d = self.__a_directory()\
+        directory = self.__a_directory()\
             .with_contact(self.__a_contact())\
             .build(SpyDataStream())
 
         with self.assertRaises(ValueError):
-            d.add_contact(self.__a_contact())
+            directory.add_contact(self.__a_contact())
 
     def test_pass_can_delete_existing_record(self):
-        s = SpyDataStream()
-        d = self.__a_directory()\
+        datastream = SpyDataStream()
+        directory = self.__a_directory()\
             .with_contact(self.__a_contact())\
-            .build(s)
+            .build(datastream)
 
-        d.remove_contact(self.__a_contact())
+        directory.remove_contact(self.__a_contact())
 
-        self.assertFalse(s.has(self.__a_contact()))
+        self.assertFalse(datastream.has(self.__a_contact()))
 
     def test_pass_no_other_records_are_deleted(self):
-        s = SpyDataStream()
-        d = self.__a_directory()\
+        datastream = SpyDataStream()
+        directory = self.__a_directory()\
             .with_contact(self.__a_contact())\
             .with_contact(self.__other_contact())\
-            .build(s)
+            .build(datastream)
 
-        d.remove_contact(self.__a_contact())
+        directory.remove_contact(self.__a_contact())
 
-        self.assertEqual(len(s.contacts), 1)
+        self.assertEqual(len(datastream.contacts), 1)
 
     def test_fail_cannot_delete_non_existing_record(self):
-        d = self.__a_directory()\
+        directory = self.__a_directory()\
             .with_contact(self.__other_contact())\
             .build(SpyDataStream())
 
         with self.assertRaises(ValueError):
-            d.remove_contact(self.__a_contact())
+            directory.remove_contact(self.__a_contact())
 
     def test_pass_can_retrieve_record_by_email(self):
-        d = self.__a_directory()\
+        directory = self.__a_directory()\
             .with_contact(self.__a_contact())\
             .with_contact(self.__other_contact())\
             .build(SpyDataStream())
 
-        c = d.contact_by_email('diana@test.com')
+        contact = directory.contact_by_email('diana@test.com')
 
-        self.assertEqual(c, self.__other_contact())
+        self.assertEqual(contact, self.__other_contact())
 
     def test_pass_non_matching_email_wont_retrieve_any_records(self):
-        d = self.__a_directory()\
+        directory = self.__a_directory()\
             .with_contact(self.__a_contact())\
             .with_contact(self.__other_contact())\
             .build(SpyDataStream())
 
-        self.assertIsNone(d.contact_by_email('arturo@test.com'))
+        self.assertIsNone(directory.contact_by_email('arturo@test.com'))
 
     def test_pass_can_retrieve_records_by_age(self):
-        d = self.__a_directory()\
+        directory = self.__a_directory()\
             .with_contact(self.__a_contact())\
             .with_contact(self.__other_contact())\
             .build(SpyDataStream())
 
         self.assertListEqual(
-            d.contacts_by_age(28),
+            directory.contacts_by_age(28),
             [self.__a_contact(), self.__other_contact()]
         )
 
     def test_pass_non_matching_age_wont_retrieve_any_records(self):
-        d = self.__a_directory()\
+        directory = self.__a_directory()\
             .with_contact(self.__a_contact())\
             .with_contact(self.__other_contact())\
             .build(SpyDataStream())
 
-        self.assertListEqual(d.contacts_by_age(45), [])
+        self.assertListEqual(directory.contacts_by_age(45), [])
 
-    def __a_directory(self) -> DirectoryBuilder:
+    @staticmethod
+    def __a_directory() -> DirectoryBuilder:
         return DirectoryBuilder()
 
-    def __a_contact(self) -> Contact:
+    @staticmethod
+    def __a_contact() -> Contact:
         return Contact('Hugo', 'hugo@test.com', 'Mexico', 28)
 
-    def __other_contact(self) -> Contact:
+    @staticmethod
+    def __other_contact() -> Contact:
         return Contact('Diana', 'diana@test.com', 'Mexico', 28)
 
 
