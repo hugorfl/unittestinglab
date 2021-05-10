@@ -29,3 +29,6 @@ class Contact:
             and self.__email == o.__email\
             and self.__country == o.__country\
             and self.__age == o.__age
+
+    def __str__(self) -> str:
+        return self.__email

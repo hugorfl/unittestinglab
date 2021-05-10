@@ -21,9 +21,14 @@ Note: Remember Right BICEP
 """
 
 import unittest
+import logging
 from directory.contact import Contact
 from test_doubles.directory_builder import DirectoryBuilder
 from test_doubles.spy_data_stream import SpyDataStream
+
+
+log_format = '%(asctime)s - %(levelname)s - %(levelno)s - %(message)s'
+logging.basicConfig(format = log_format, level = logging.ERROR)
 
 """
 Test Cases:
@@ -38,7 +43,6 @@ Test Cases:
 9 [TTP] Can retrieve record by age
 10 [TTP] Non matching age wont retrieve records
 """
-
 
 class DirectoryManagerTest(unittest.TestCase):
 
