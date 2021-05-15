@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, List
 from directory.contact import Contact
 
 
@@ -13,7 +13,7 @@ class DataStream(ABC):
         pass
 
     @abstractmethod
-    def search(self, key: str, val: Any) -> list[Contact]:
+    def search(self, key: str, val: Any) -> List[Contact]:
         pass
 
     @abstractmethod

@@ -1,6 +1,6 @@
 from directory.contact import Contact
 from directory.data_stream import DataStream
-from typing import Any
+from typing import Any, List
 
 
 class SpyDataStream(DataStream):
@@ -13,7 +13,7 @@ class SpyDataStream(DataStream):
     def remove(self, contact: Contact):
         del self.__contacts[contact.email]
 
-    def search(self, key: str, val: Any) -> list[Contact]:
+    def search(self, key: str, val: Any) -> List[Contact]:
         contacts = []
 
         for email, contact in self.__contacts.items():
@@ -27,5 +27,5 @@ class SpyDataStream(DataStream):
         return contact.email in self.__contacts
 
     @property
-    def contacts(self) -> list[Contact]:
+    def contacts(self) -> List[Contact]:
         return list(self.__contacts.values())

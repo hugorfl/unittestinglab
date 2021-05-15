@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 import logging
 from .contact import Contact
 from .data_stream import DataStream
@@ -30,5 +30,5 @@ class Directory:
         contacts = self.__stream.search('email', email)
         return contacts[0] if contacts else None
 
-    def contacts_by_age(self, age: int) -> list[Contact]:
+    def contacts_by_age(self, age: int) -> List[Contact]:
         return self.__stream.search('age', age)
