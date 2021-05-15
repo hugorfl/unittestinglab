@@ -16,7 +16,7 @@ class SpyDataStream(DataStream):
     def search(self, key: str, val: Any) -> List[Contact]:
         contacts = []
 
-        for email, contact in self.__contacts.items():
+        for _, contact in self.__contacts.items():
             v = getattr(contact, key)
             if val == v:
                 contacts.append(contact)

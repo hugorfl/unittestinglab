@@ -15,7 +15,7 @@ class Directory:
             raise ValueError(err_str)
 
         self.__stream.add(contact)
-        logging.info(f"Contact '{contact}' added successfully")
+        logging.info("Contact '%s' added successfully", contact)
 
     def remove_contact(self, contact: Contact):
         if not self.__stream.has(contact):
@@ -24,7 +24,7 @@ class Directory:
             raise ValueError(err_str)
 
         self.__stream.remove(contact)
-        logging.info(f"Contact '{contact}' removed successfully")
+        logging.info("Contact '%s' removed successfully", contact)
 
     def contact_by_email(self, email: str) -> Optional[Contact]:
         contacts = self.__stream.search('email', email)
