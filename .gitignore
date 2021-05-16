@@ -6,3 +6,6 @@ sca_res.txt
 # generated
 .idea
 __pycache__
+
+# doxygen
+html/
